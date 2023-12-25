@@ -1,0 +1,95 @@
+Product (Model)
+	- Serial Number
+	- Name
+	- Price
+	- Vendor
+	- Category
+	- Quantity
+
+ProudctRepoitory ( Database connector )
+	- CRUD
+
+
+Inventory ( Candidate for a Controller )
+	- Proudcts
+	- [Quantity per Category] may be calculated
+
+	+ Get Products
+	+ Get Categories (with quantity per category)
+
+
+Customer (Model)
+	- Username
+	- Balance
+	- Address (will discuss that)
+
+
+CustomerRepository
+
+
+CustomerController
+	+ Register (includes init. balance)
+
+
+Address (Model)
+	City ( may be shared across multiple orders )
+	District
+	St.
+	
+
+Order (Model)
+	- List of Order Entry ( may be anther order, or a product )
+	- Address (main address)
+	- Customer Id (so we can deduct from each account)
+	- Created Date
+	- IsConfirmed
+	- IsCanceled
+
+OrderRepository
+
+
+OrderController
+	+ Post an order
+	+ List all orders (with details, and if there are any composites)
+	+ Ship an order
+	+ Cancel an order
+
+	
+
+Notification (Model) (OR IS IT?) should notifications have behaviour?
+	- Template (string)
+	- Operation (enum)
+	
+
+NotificationQueue
+
+
+NotificationAnalyzer
+
+
+NotificationController
+	+ List all pending notifications
+	+ List most notified email/phone
+	+ List most sent notification template
+
+
+GlobalConfiguration
+	- Cancelation duration
+	- Templates
+	- 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
