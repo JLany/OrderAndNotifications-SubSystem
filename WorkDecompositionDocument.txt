@@ -1,0 +1,32 @@
+			------------ Work Decomposition Document ------------
+
+
+1 - Customer Controller (Along with the models it needs and so forth)
+
+2 - Products Controller (Along with the models it needs and so forth)
+
+3 - Notifications Controller (Along with the models it needs and so forth)
+
+4 - Orders Controller (Along with the models it needs and so forth)
+
+
+___________________
+Conventions:
+	- All endpoints should be of the form: localhost/api/controllername/action/{id=?}
+	  Controller name should be a plural of the model it represents.
+	  For CRUD, no action is needed, since the action is specified with the HTTP method.
+	  HTTP methods: { GET, POST, PUT, DELETE }, CRUD respectively.
+
+	- Method naming will follow Java's convention, camelCase.
+
+	- Private fields for a class will follow the _underscoreConvention.
+	  # With an exception for the properties (those who have getters and setters)
+	    and do not provide any internal functionality for the class.
+
+	- Want to test out something different than the main workflow? Make yourself a local
+	  branch and do not forget to keep it up to date with main branch. Otherwise branches
+	  are discouraged.
+
+
+
+# NOTE: This document is to get updated as needed in the future.
