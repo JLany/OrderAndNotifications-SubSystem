@@ -7,4 +7,8 @@ public class SMSNotification extends Notification {
         super(message);
         _phoneNumber = phoneNumber;
     }
+
+    public String getPhoneNumber(){
+        return _phoneNumber;
+    }
 }

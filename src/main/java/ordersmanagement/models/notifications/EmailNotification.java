@@ -7,4 +7,8 @@ public class EmailNotification extends Notification {
         super(message);
         _email = email;
     }
+
+    public String getEmail(){
+        return _email;
+    }
 }
