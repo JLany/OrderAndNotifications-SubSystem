@@ -5,6 +5,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 @Entity
-public class Order {
+public class OrderModel {
     private @Id @GeneratedValue Long id;
 }
