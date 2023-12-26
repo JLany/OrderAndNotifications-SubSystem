@@ -15,7 +15,7 @@ Conventions:
 	- All endpoints should be of the form: localhost/api/controllername/action/{id=?}
 	  Controller name should be a plural of the model it represents.
 	  For CRUD, no action is needed, since the action is specified with the HTTP method.
-	  HTTP methods: { GET, POST, PUT, DELETE }, CRUD respectively.
+	  HTTP methods: { POST, GET, PUT, DELETE }, CRUD respectively.
 
 	- Method naming will follow Java's convention, camelCase.
 
