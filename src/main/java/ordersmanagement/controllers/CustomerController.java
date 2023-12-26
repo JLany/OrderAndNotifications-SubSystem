@@ -6,11 +6,7 @@ import ordersmanagement.repositories.CustomerRepository;
 
 import java.util.List;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class CustomerController {
@@ -35,5 +31,25 @@ public class CustomerController {
     List<Customer> getAllCustomers() {
         return repository.findAll();
     }
+    @PutMapping("/customers/{id}")
+    Customer editCustomer(@RequestBody Customer customer,@PathVariable Long id)
+    {
+        Customer existingCustomer = repository.findById(id)
+                .orElseThrow(() -> new CustomerNotFoundException(id));
+
+        existingCustomer.setName(customer.getName());
+        existingCustomer.setBalance(customer.getBalance());
+        existingCustomer.setAddress(customer.getAddress());
+        return repository.save(existingCustomer);
+    }
+    @DeleteMapping("/customers/{id}")
+    void deleteEmployee(@PathVariable Long id) {
+        repository.deleteById(id);
+    }
+    @DeleteMapping("/customers")
+    void deleteAllEmployee() {
+        repository.deleteAll();
+    }
+
 
 }

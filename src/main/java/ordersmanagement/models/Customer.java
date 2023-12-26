@@ -9,6 +9,15 @@ import jakarta.persistence.Id;
 public class Customer {
     private @Id
     @GeneratedValue Long id;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     private String name;
     private String balance;
     @Embedded
