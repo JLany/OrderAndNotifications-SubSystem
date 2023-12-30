@@ -1,22 +1,27 @@
 package ordersmanagement.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 
 import java.util.UUID;
 
+@Entity
 public class Product {
-    private final UUID serialNumber;
+    private @Id
+    @GeneratedValue Long serialNumber;
     private String name;
     private double price;
     private String vendor;
-    private UUID categoryID;
+    private Long categoryID;
     private int quantity;
 
     public Product(@JsonProperty("name") String name,@JsonProperty("price") double price,
-                   @JsonProperty("vendor") String vendor,@JsonProperty("categoryID") UUID categoryID,
+                   @JsonProperty("vendor") String vendor,@JsonProperty("categoryID") Long categoryID,
                    @JsonProperty("quantity") int quantity){
 
-        serialNumber = UUID.randomUUID();
+//        serialNumber = UUID.randomUUID();
         this.name = name;
         this.price = price;
         this.vendor = vendor;
@@ -24,7 +29,7 @@ public class Product {
         this.quantity = quantity;
     }
 
-    public UUID getSerialNumber() {
+    public Long getSerialNumber() {
         return serialNumber;
     }
 
@@ -40,7 +45,7 @@ public class Product {
         return vendor;
     }
 
-    public UUID getCategoryID() {
+    public Long getCategoryID() {
         return categoryID;
     }
 
@@ -60,7 +65,7 @@ public class Product {
         this.vendor = vendor;
     }
 
-    public void setCategoryID(UUID categoryID) {
+    public void setCategoryID(Long categoryID) {
         this.categoryID = categoryID;
     }
 
