@@ -1,14 +1,15 @@
 package ordersmanagement.models;
 
-public class OrderEntryModel {
+
+public class OrderEntry {
     private ProductModel product;
     private int quantity;
     private double subTotal;
 
-    public OrderEntryModel() {
+    public OrderEntry() {
     }
 
-    public OrderEntryModel(ProductModel product, int quantity, double subTotal) {
+    public OrderEntry(ProductModel product, int quantity, double subTotal) {
         this.product = product;
         this.quantity = quantity;
         this.subTotal = subTotal;

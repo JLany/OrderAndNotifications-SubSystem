@@ -1,9 +1,14 @@
 package ordersmanagement.repositories;
 
 import ordersmanagement.models.OrderModel;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Service;
+import ordersmanagement.models.SimpleOrder;
 
-@Service
-public interface OrderRepository extends JpaRepository<OrderModel, Long> {
+import java.util.List;
+import java.util.Optional;
+
+public interface OrderRepository  {
+    Optional<OrderModel> findById(Long id);
+    List<OrderModel> findAll();
+    OrderModel save(OrderModel order);
+    void deleteById(Long id);
 }

@@ -19,12 +19,12 @@ public class Customer {
     }
 
     private String name;
-    private String balance;
+    private double balance;
     @Embedded
     private Address address;
 
     public Customer() {}
-    public Customer(String name, String balance, Address address) {
+    public Customer(String name, double balance, Address address) {
         this.name = name;
         this.balance = balance;
         this.address = address;
@@ -40,11 +40,11 @@ public class Customer {
         this.name = name;
     }
 
-    public String getBalance() {
+    public double getBalance() {
         return balance;
     }
 
-    public void setBalance(String balance) {
+    public void setBalance(double balance) {
         this.balance = balance;
     }
 
