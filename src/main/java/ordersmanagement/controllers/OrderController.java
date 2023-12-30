@@ -42,7 +42,6 @@ public class OrderController {
         OrderModel model = processor.createOrderModel(order);
 
         // TODO - Notify the customer of order confirmation.
-
         // TODO - Deduct orders' amounts from each customer's balance.
 
         return model;
@@ -54,7 +53,6 @@ public class OrderController {
                 .orElseThrow(() -> new OrderNotFoundException(String.format("Could not find order %d", orderId)));
 
         // TODO - Notify customers of order shipment.
-
         // TODO - Deduct shipping fees of each order from it's corresponding customer.
     }
 
