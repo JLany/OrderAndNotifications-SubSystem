@@ -17,8 +17,7 @@ public class Category {
     public Category() {
     }
 
-    public Category(Long id, @JsonProperty("name") String name){
-        this.id = id;
+    public Category(@JsonProperty("name") String name){
         this.name = name;
         this.remainingQuantity = 0;
     }
