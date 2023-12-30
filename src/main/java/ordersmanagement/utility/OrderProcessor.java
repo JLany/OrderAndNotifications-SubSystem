@@ -1,5 +1,6 @@
 package ordersmanagement.utility;
 
+import ordersmanagement.config.GlobalConfiguration;
 import ordersmanagement.dtos.OrderDto;
 import ordersmanagement.dtos.SimpleOrderDto;
 import ordersmanagement.exceptions.OrderNotFoundException;
@@ -7,20 +8,22 @@ import ordersmanagement.models.OrderModel;
 import ordersmanagement.models.OrderEntry;
 import ordersmanagement.models.Product;
 import ordersmanagement.models.SimpleOrder;
+import ordersmanagement.repositories.OrderRepository;
 import ordersmanagement.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 public class OrderProcessor {
     private final ProductRepository productRepository;
+    private final OrderRepository orderRepository;
 
     @Autowired
-    public OrderProcessor(ProductRepository productRepository) {
+    public OrderProcessor(ProductRepository productRepository, OrderRepository orderRepository) {
         this.productRepository = productRepository;
+        this.orderRepository = orderRepository;
     }
 
     public OrderModel createOrderModel(OrderDto orderDto) {
@@ -31,6 +34,9 @@ public class OrderProcessor {
                 .findFirst()
                 .orElseThrow(() -> new OrderNotFoundException("Main order's customer id does not match the customer id provided in the request."));
 
+        // Divide the shipping fees among all customers participating in this compound order.
+        double shippingFees = GlobalConfiguration.SHIPPING_FEES / orderDto.getOrders().size();
+
         orderDto.getOrders().remove(mainDto);
 
         OrderModel mainOrder = new OrderModel();
@@ -38,6 +44,7 @@ public class OrderProcessor {
         mainOrder.getOrder().setAddress(mainDto.getAddress());
         mainOrder.getOrder().setShipped(false);
         mainOrder.getOrder().setCreatedDate(LocalDateTime.now());
+        mainOrder.getOrder().setShippingFees(shippingFees);
 
         mainOrder.getOrder().setEntries(
                 mainDto.getEntries().stream()
@@ -67,6 +74,7 @@ public class OrderProcessor {
                 model.setAddress(dto.getAddress());
                 model.setShipped(false);
                 model.setCreatedDate(LocalDateTime.now());
+                model.setShippingFees(shippingFees);
 
                 model.setEntries(
                         dto.getEntries().stream()
@@ -92,6 +100,8 @@ public class OrderProcessor {
             }
         }
 
+        orderRepository.save(mainOrder);
+
         return mainOrder;
     }
 
@@ -100,17 +110,27 @@ public class OrderProcessor {
     // ...
 
     // TODO - Think through this.
-    // Shouldn't this be the responsibility of a Notification Manager or something??
 //    public void notifyCustomer(NotificationStrategy notificationStrategy, OrderModel order) {
 //
 //    }
 
-    // Might need a strategy factory as well.
 
-    public boolean cancelOrder(OrderModel order) {
-        // Return true, if canceled successfully.
-        // Return false otherwise.
+    public boolean canCancelOrder(OrderModel order) {
+        if (order.getOrder().getCreatedDate()
+                .isBefore(LocalDateTime.now()
+                        .minusMinutes(GlobalConfiguration.CANCEL_ORDER_NUMBER_OF_MINUTES)
+                )
+        ) {
+            return false;
+        }
 
-        return false;
+        return true;
+    }
+
+    public void cancelOrder(OrderModel order) {
+        // TODO - Notify each customer that his corresponding order has been cancelled.
+        // TODO - Credit customers' balances with each order's amount.
+
+        orderRepository.deleteById(order.getId());
     }
 }

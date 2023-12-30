@@ -1,4 +1,4 @@
-package ordersmanagement;
+package ordersmanagement.config;
 
 import ordersmanagement.models.Address;
 import ordersmanagement.models.Category;

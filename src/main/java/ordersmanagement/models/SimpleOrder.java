@@ -1,7 +1,5 @@
 package ordersmanagement.models;
 
-import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,18 +12,20 @@ public class SimpleOrder {
     private Address address;
     private boolean isShipped;
     private LocalDateTime createdDate;
+    private double shippingFees;
 
     public SimpleOrder() {
         this.entries = new ArrayList<>();
     }
 
-    public SimpleOrder(List<OrderEntry> entries, double total, Address address, boolean isShipped, LocalDateTime createdDate, Long customerId) {
+    public SimpleOrder(List<OrderEntry> entries, double total, Address address, boolean isShipped, LocalDateTime createdDate, Long customerId, double shippingFees) {
         this.entries = entries;
         this.total = total;
         this.address = address;
         this.isShipped = isShipped;
         this.createdDate = createdDate;
         this.customerId = customerId;
+        this.shippingFees = shippingFees;
     }
 
     public List<OrderEntry> getEntries() {
@@ -74,5 +74,13 @@ public class SimpleOrder {
 
     public void setCustomerId(Long customerId) {
         this.customerId = customerId;
+    }
+
+    public double getShippingFees() {
+        return shippingFees;
+    }
+
+    public void setShippingFees(double shippingFees) {
+        this.shippingFees = shippingFees;
     }
 }
