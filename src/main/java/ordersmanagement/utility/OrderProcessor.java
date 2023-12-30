@@ -6,6 +6,7 @@ import ordersmanagement.exceptions.OrderNotFoundException;
 import ordersmanagement.models.OrderModel;
 import ordersmanagement.models.OrderEntry;
 import ordersmanagement.models.SimpleOrder;
+import ordersmanagement.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

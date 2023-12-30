@@ -2,9 +2,7 @@ package ordersmanagement;
 
 import ordersmanagement.models.Address;
 import ordersmanagement.models.Customer;
-import ordersmanagement.models.ProductModel;
 import ordersmanagement.repositories.CustomerRepository;
-import ordersmanagement.utility.ProductRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;

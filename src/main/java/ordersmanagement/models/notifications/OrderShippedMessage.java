@@ -14,4 +14,5 @@ public class OrderShippedMessage implements Message {
                 _name, _product, _address);
 
     }
+
 }
