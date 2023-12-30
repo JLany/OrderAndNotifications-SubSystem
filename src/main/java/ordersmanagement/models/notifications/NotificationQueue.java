@@ -27,6 +27,4 @@ public class NotificationQueue {
         return _notificationsQueue;
     }
 
-    // TODO: method to simulate removal from queue
-
 }

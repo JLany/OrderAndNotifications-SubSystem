@@ -31,7 +31,7 @@ public class NotificationDispatcher {
 
     // Add to queue
     public void dispatchNotification(Notification notification){
-        // TODO: ADD TO REPOSITORY AFTER SUCCESSFUL REMOVAL FROM QUEUE (NOTIFICATION SENT)
+        // TODO: ADD TO REPOSITORY ONLY AFTER SUCCESSFUL REMOVAL FROM QUEUE (NOTIFICATION SENT)
         notificationRepository.save(notification);
         notificationQueue.addToQueue(notification);
     }
@@ -84,6 +84,22 @@ public class NotificationDispatcher {
         return mostUsedPhoneNumber;
     }
     public String getMostUsedTemplate(){
-        return "test";
+        ArrayList<Notification> currentNotifications = (ArrayList<Notification>) notificationRepository.findAll();
+        Map<String, Integer> templateCount = new HashMap<>();
+        int size = currentNotifications.size();
+        for (int i = 0; i < size; i++){
+            String templateUsed = currentNotifications.get(i).getClass().getName();
+            templateCount.put(templateUsed, templateCount.getOrDefault(templateUsed, 0)+1);
+        }
+
+        String mostUsedTemplate = null;
+        int maxCount = 0;
+        for (Map.Entry<String , Integer> entry:templateCount.entrySet()){
+            if (entry.getValue()>maxCount){
+                maxCount = entry.getValue();
+                mostUsedTemplate = entry.getKey();
+            }
+        }
+        return mostUsedTemplate;
     }
 }
