@@ -10,8 +10,8 @@ import java.util.Map;
 public class NotificationDispatcher {
 
     private static NotificationDispatcher instance;
-    NotificationQueue notificationQueue;
-    NotificationRepository notificationRepository;
+    private final NotificationQueue notificationQueue;
+    private final NotificationRepository notificationRepository;
 
     private NotificationDispatcher(NotificationQueue notificationQueue, NotificationRepository notificationRepository) {
         this.notificationQueue = notificationQueue;
@@ -31,8 +31,6 @@ public class NotificationDispatcher {
 
     // Add to queue
     public void dispatchNotification(Notification notification){
-        // TODO: ADD TO REPOSITORY ONLY AFTER SUCCESSFUL REMOVAL FROM QUEUE (NOTIFICATION SENT)
-        notificationRepository.save(notification);
         notificationQueue.addToQueue(notification);
     }
 
@@ -40,6 +38,15 @@ public class NotificationDispatcher {
         return notificationQueue.getQueueContents();
 
     }
+
+    public NotificationQueue getNotificationQueue(){
+        return notificationQueue;
+    }
+
+    public NotificationRepository getNotificationRepository(){
+        return notificationRepository;
+    }
+
     public String getMostNotifiedEmail(){
         ArrayList<Notification> currentNotifications = (ArrayList<Notification>) notificationRepository.findAll();
         Map<String, Integer> emailCount = new HashMap<>();

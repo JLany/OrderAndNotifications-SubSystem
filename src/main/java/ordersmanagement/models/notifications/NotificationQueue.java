@@ -7,6 +7,9 @@ import java.util.Queue;
 
 public class NotificationQueue {
     private ArrayList<Notification> _notificationsQueue;
+    public boolean isEmpty(){
+        return _notificationsQueue.isEmpty();
+    }
     NotificationQueue(){
         _notificationsQueue = new ArrayList<>();
     }
@@ -15,7 +18,7 @@ public class NotificationQueue {
         _notificationsQueue.add(notification);
     }
 
-    private Notification dequeue(){
+    public Notification dequeue(){
         if (_notificationsQueue.isEmpty()){
             throw new IllegalStateException("Queue is empty");
         }
