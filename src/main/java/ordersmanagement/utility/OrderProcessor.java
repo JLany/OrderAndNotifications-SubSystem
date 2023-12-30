@@ -5,6 +5,7 @@ import ordersmanagement.dtos.SimpleOrderDto;
 import ordersmanagement.exceptions.OrderNotFoundException;
 import ordersmanagement.models.OrderModel;
 import ordersmanagement.models.OrderEntry;
+import ordersmanagement.models.Product;
 import ordersmanagement.models.SimpleOrder;
 import ordersmanagement.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class OrderProcessor {
         // We need to find the order that has the customerId as it's customerId.
         // Then we add the rest of the orders to it as a list.
         SimpleOrderDto mainDto = orderDto.getOrders().stream()
-                .filter(dto -> dto.getCustomerId() == orderDto.getCustomerId())
+                .filter(dto -> dto.getCustomerId().equals(orderDto.getCustomerId()))
                 .findFirst()
                 .orElseThrow(() -> new OrderNotFoundException("Main order's customer id does not match the customer id provided in the request."));
 
@@ -40,11 +41,14 @@ public class OrderProcessor {
 
         mainOrder.getOrder().setEntries(
                 mainDto.getEntries().stream()
-                        .map(oed -> new OrderEntry(
-                                productRepository.findById(oed.getProductId()).orElseThrow(),
-                                oed.getQuantity(),
-                                productRepository.findById(oed.getProductId()).orElseThrow().getPrice() * oed.getQuantity())
-                        )
+                        .map(oed -> {
+                            Product p = productRepository.findById(oed.getProductId()).orElseThrow();
+
+                            return new OrderEntry(
+                                    p,
+                                    oed.getQuantity(),
+                                    p.getPrice() * oed.getQuantity());
+                        })
                         .toList()
         );
 
@@ -66,11 +70,14 @@ public class OrderProcessor {
 
                 model.setEntries(
                         dto.getEntries().stream()
-                                .map(oed -> new OrderEntry(
-                                        productRepository.findById(oed.getProductId()).orElseThrow(),
-                                        oed.getQuantity(),
-                                        productRepository.findById(oed.getProductId()).orElseThrow().getPrice() * oed.getQuantity())
-                                )
+                                .map(oed -> {
+                                    Product p = productRepository.findById(oed.getProductId()).orElseThrow();
+
+                                    return new OrderEntry(
+                                            p,
+                                            oed.getQuantity(),
+                                            p.getPrice() * oed.getQuantity());
+                                })
                                 .toList()
                 );
 

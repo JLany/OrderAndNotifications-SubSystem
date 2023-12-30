@@ -1,10 +1,13 @@
 // TODO: is this in the right place??
 package ordersmanagement.models.notifications;
 
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 
+@Component
 public class NotificationQueue {
     private ArrayList<Notification> _notificationsQueue;
     public boolean isEmpty(){

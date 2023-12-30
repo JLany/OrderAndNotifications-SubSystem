@@ -1,12 +1,14 @@
 package ordersmanagement.models.notifications;
 import ordersmanagement.repositories.NotificationRepository;
 import ordersmanagement.repositories.NotificationRepository;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 // responsible for all statistics whether in-queue or out of queue
+@Component
 public class NotificationDispatcher {
 
     private static NotificationDispatcher instance;

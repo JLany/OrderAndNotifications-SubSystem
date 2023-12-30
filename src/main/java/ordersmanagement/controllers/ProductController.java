@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@RequestMapping("api/Product")
 @RestController
+@RequestMapping("/api/Product")
 public class ProductController {
     private ProductRepository productRepository;
     private CategoryRepository categoryRepository;
@@ -50,13 +50,13 @@ public class ProductController {
     }
 
     //get all Categories
-    @GetMapping("getCategories")
+    @GetMapping("/getCategories")
     public List<Category> getAllCategories(){
         return categoryRepository.findAll();
     }
 
     //get all Products
-    @GetMapping("getProducts")
+    @GetMapping("/getProducts")
     public List<Product> getAllProducts(){
         return productRepository.findAll();
     }

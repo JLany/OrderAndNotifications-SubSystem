@@ -10,18 +10,25 @@ import java.util.UUID;
 @Entity
 public class Category {
     private @Id
-    @GeneratedValue Long categoryID;
+    @GeneratedValue Long id;
     private String name;
     private int remainingQuantity;
 
-    public Category(@JsonProperty("name") String name){
-//        this.categoryID = UUID.randomUUID();
+    public Category() {
+    }
+
+    public Category(Long id, @JsonProperty("name") String name){
+        this.id = id;
         this.name = name;
         this.remainingQuantity = 0;
     }
 
-    public Long getCategoryID() {
-        return categoryID;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getName() {

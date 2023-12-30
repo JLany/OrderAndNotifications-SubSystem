@@ -10,18 +10,19 @@ import java.util.UUID;
 @Entity
 public class Product {
     private @Id
-    @GeneratedValue Long serialNumber;
+    @GeneratedValue Long id;
     private String name;
     private double price;
     private String vendor;
     private Long categoryID;
     private int quantity;
 
+    public Product() {
+    }
+
     public Product(@JsonProperty("name") String name,@JsonProperty("price") double price,
                    @JsonProperty("vendor") String vendor,@JsonProperty("categoryID") Long categoryID,
                    @JsonProperty("quantity") int quantity){
-
-//        serialNumber = UUID.randomUUID();
         this.name = name;
         this.price = price;
         this.vendor = vendor;
@@ -29,8 +30,12 @@ public class Product {
         this.quantity = quantity;
     }
 
-    public Long getSerialNumber() {
-        return serialNumber;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
