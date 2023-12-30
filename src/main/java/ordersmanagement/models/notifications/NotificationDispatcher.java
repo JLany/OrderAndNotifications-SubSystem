@@ -8,11 +8,30 @@ import java.util.Map;
 
 // responsible for all statistics whether in-queue or out of queue
 public class NotificationDispatcher {
+
+    private static NotificationDispatcher instance;
     NotificationQueue notificationQueue;
     NotificationRepository notificationRepository;
 
+    private NotificationDispatcher(NotificationQueue notificationQueue, NotificationRepository notificationRepository) {
+        this.notificationQueue = notificationQueue;
+        this.notificationRepository = notificationRepository;
+    }
+
+    public static NotificationDispatcher getInstance(NotificationQueue notificationQueue, NotificationRepository notificationRepository) {
+        if (instance == null) {
+            synchronized (NotificationDispatcher.class) {
+                if (instance == null) {
+                    instance = new NotificationDispatcher(notificationQueue, notificationRepository);
+                }
+            }
+        }
+        return instance;
+    }
+
     // Add to queue
     public void dispatchNotification(Notification notification){
+        // TODO: ADD TO REPOSITORY AFTER SUCCESSFUL REMOVAL FROM QUEUE (NOTIFICATION SENT)
         notificationRepository.save(notification);
         notificationQueue.addToQueue(notification);
     }
