@@ -24,14 +24,25 @@ public class SeedDatabase {
         return args -> {
             customers.save(new Customer("Yousef", 1000.0, new Address()));
 
-            categories.save(new Category(1L, "Toys"));
-            categories.save(new Category(2L, "Food"));
-            categories.save(new Category(3L, "Misc"));
+            //Toys Category
+            Category tempCategory = new Category("Toys");
+            tempCategory.setRemainingQuantity(45);
+            categories.save(tempCategory);
+            Long tempCategoryID = tempCategory.getId();
 
-            products.save(new Product("Choco", 10.0, "Galaxy", 2L, 10));
-            products.save(new Product("Sandwich", 15.0, "Caco", 2L, 10));
-            products.save(new Product("Biscuit", 11.0, "Loutsy", 2L, 10));
-            products.save(new Product("Juice", 19.0, "Suntop", 2L, 10));
+            products.save(new Product("Teddy Bear", 60.0, "Toys R Us", tempCategoryID, 20));
+            products.save(new Product("Car", 45.0, "Hot Wheels", tempCategoryID, 10));
+            products.save(new Product("Pyramids Puzzle", 110.0, "LEGO", tempCategoryID, 15));
+
+            //Tech Category
+            tempCategory = new Category("Technology");
+            tempCategory.setRemainingQuantity(60);
+            categories.save(tempCategory);
+            tempCategoryID = tempCategory.getId();
+
+            products.save(new Product("Iphone 15", 60000.0, "Apple", tempCategoryID, 30));
+            products.save(new Product("Samsung S23 Ultra", 45000.0, "Samsung", tempCategoryID, 20));
+            products.save(new Product("Apple Watch", 11000.0, "Apple", tempCategoryID, 10));
         };
     }
 
