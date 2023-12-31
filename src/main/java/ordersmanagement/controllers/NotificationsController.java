@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.List;
+
 @RestController
-@RequestMapping("notifications")
+@RequestMapping("api/notifications")
 public class NotificationsController {
     private final NotificationDispatcher notificationDispatcher;
 
@@ -18,7 +20,7 @@ public class NotificationsController {
         this.notificationDispatcher = notificationDispatcher;
     }
     @GetMapping("/getNotificationsQueue")
-    ArrayList<Notification> getQueueContents(){
+    List<Notification> getQueueContents(){
         return notificationDispatcher.getContentsOfQueue();
     }
 
