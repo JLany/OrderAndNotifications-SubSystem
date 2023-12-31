@@ -1,6 +1,11 @@
-package ordersmanagement.models.notifications;
+package ordersmanagement.utility;
+import ordersmanagement.models.notifications.EmailNotification;
+import ordersmanagement.models.notifications.Notification;
+import ordersmanagement.models.notifications.NotificationQueue;
+import ordersmanagement.models.notifications.SMSNotification;
 import ordersmanagement.repositories.NotificationRepository;
 import ordersmanagement.repositories.NotificationRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -11,24 +16,13 @@ import java.util.Map;
 @Component
 public class NotificationDispatcher {
 
-    private static NotificationDispatcher instance;
     private final NotificationQueue notificationQueue;
     private final NotificationRepository notificationRepository;
 
-    private NotificationDispatcher(NotificationQueue notificationQueue, NotificationRepository notificationRepository) {
+    @Autowired
+    public NotificationDispatcher(NotificationQueue notificationQueue, NotificationRepository notificationRepository) {
         this.notificationQueue = notificationQueue;
         this.notificationRepository = notificationRepository;
-    }
-
-    public static NotificationDispatcher getInstance(NotificationQueue notificationQueue, NotificationRepository notificationRepository) {
-        if (instance == null) {
-            synchronized (NotificationDispatcher.class) {
-                if (instance == null) {
-                    instance = new NotificationDispatcher(notificationQueue, notificationRepository);
-                }
-            }
-        }
-        return instance;
     }
 
     // Add to queue
@@ -110,5 +104,13 @@ public class NotificationDispatcher {
             }
         }
         return mostUsedTemplate;
+    }
+
+
+    public synchronized void sendNextNotification(){
+        if(!notificationQueue.isEmpty()){
+            Notification notification = notificationQueue.dequeue();
+            notificationRepository.save(notification);
+        }
     }
 }

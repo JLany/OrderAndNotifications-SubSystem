@@ -1,5 +1,4 @@
-package ordersmanagement.models.notifications;
-import ordersmanagement.repositories.NotificationRepository;
+package ordersmanagement.utility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -16,11 +15,6 @@ public class NotificationsProcessor {
 
     @Scheduled(fixedDelay = NOTIFICATION_PROCESS_INTERVAL_SECONDS * 1000)
     public void processNotification(){
-        NotificationQueue notificationQueue = notificationDispatcher.getNotificationQueue();
-        if (!notificationQueue.isEmpty()){
-            Notification notification = notificationQueue.dequeue();
-            NotificationRepository notificationRepository = notificationDispatcher.getNotificationRepository();
-            notificationRepository.save(notification);
-        }
+        notificationDispatcher.sendNextNotification();
     }
 }
