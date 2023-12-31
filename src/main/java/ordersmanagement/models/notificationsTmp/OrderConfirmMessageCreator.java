@@ -1,4 +1,7 @@
-package ordersmanagement.models.notifications;
+package ordersmanagement.models.notificationsTmp;
+
+import ordersmanagement.models.notifications.Message;
+import ordersmanagement.models.notifications.OrderConfirmedMessage;
 
 public class OrderConfirmMessageCreator implements MessageFactory{
     private String name;

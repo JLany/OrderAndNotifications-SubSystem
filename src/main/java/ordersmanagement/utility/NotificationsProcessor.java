@@ -1,5 +1,4 @@
-package ordersmanagement.models.notifications;
-import ordersmanagement.repositories.NotificationRepository;
+package ordersmanagement.utility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;

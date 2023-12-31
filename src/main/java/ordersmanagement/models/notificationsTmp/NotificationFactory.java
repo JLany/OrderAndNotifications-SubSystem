@@ -1,4 +1,7 @@
-package ordersmanagement.models.notifications;
+package ordersmanagement.models.notificationsTmp;
+
+import ordersmanagement.models.notifications.Message;
+import ordersmanagement.models.notifications.Notification;
 
 public abstract class NotificationFactory {
 

@@ -1,4 +1,3 @@
-// TODO: is this in the right place??
 package ordersmanagement.models.notifications;
 
 import org.springframework.stereotype.Component;
@@ -29,7 +28,7 @@ public class NotificationQueue {
         return _notificationsQueue.remove(0);
     }
 
-    ArrayList<Notification> getQueueContents(){
+    public ArrayList<Notification> getQueueContents(){
         return _notificationsQueue;
     }
 

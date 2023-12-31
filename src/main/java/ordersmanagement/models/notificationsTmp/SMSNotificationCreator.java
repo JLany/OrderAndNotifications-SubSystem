@@ -1,6 +1,8 @@
-package ordersmanagement.models.notifications;
+package ordersmanagement.models.notificationsTmp;
 
-import java.util.PrimitiveIterator;
+import ordersmanagement.models.notifications.Message;
+import ordersmanagement.models.notifications.Notification;
+import ordersmanagement.models.notifications.SMSNotification;
 
 public class SMSNotificationCreator extends NotificationFactory{
     private String phoneNumber;

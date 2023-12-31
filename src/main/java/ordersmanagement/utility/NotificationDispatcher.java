@@ -1,4 +1,8 @@
-package ordersmanagement.models.notifications;
+package ordersmanagement.utility;
+import ordersmanagement.models.notifications.EmailNotification;
+import ordersmanagement.models.notifications.Notification;
+import ordersmanagement.models.notifications.NotificationQueue;
+import ordersmanagement.models.notifications.SMSNotification;
 import ordersmanagement.repositories.NotificationRepository;
 import ordersmanagement.repositories.NotificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
