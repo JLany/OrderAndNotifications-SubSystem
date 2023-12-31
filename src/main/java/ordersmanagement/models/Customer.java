@@ -19,13 +19,18 @@ public class Customer {
     }
 
     private String name;
+    private String email;
     private double balance;
+
     @Embedded
     private Address address;
 
+
+
     public Customer() {}
-    public Customer(String name, double balance, Address address) {
+    public Customer(String name, String email,double balance, Address address) {
         this.name = name;
+        this.email = email;
         this.balance = balance;
         this.address = address;
     }
@@ -35,6 +40,8 @@ public class Customer {
     public String getName() {
         return name;
     }
+    public String getEmail() {return email;}
+    public void setEmail(String email) {this.email = email;}
 
     public void setName(String name) {
         this.name = name;

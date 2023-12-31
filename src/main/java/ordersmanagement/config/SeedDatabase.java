@@ -22,7 +22,7 @@ public class SeedDatabase {
     CommandLineRunner initDatabase(CustomerRepository customers, ProductRepository products, CategoryRepository categories) {
 
         return args -> {
-            customers.save(new Customer("Yousef", 1000.0, new Address()));
+            customers.save(new Customer("Yousef","yousef@gmail.com", 1000.0, new Address()));
 
             //Toys Category
             Category tempCategory = new Category("Toys");
