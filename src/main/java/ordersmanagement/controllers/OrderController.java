@@ -39,10 +39,9 @@ public class OrderController {
 
     @PostMapping("/orders")
     public OrderModel add(@RequestBody OrderDto order) {
-        OrderModel model = processor.createOrderModel(order);
+        OrderModel model = processor.createOrder(order);
 
-        // TODO - Notify the customer of order confirmation.
-        // TODO - Deduct orders' amounts from each customer's balance.
+        processor.confirmOrder(model);
 
         return model;
     }

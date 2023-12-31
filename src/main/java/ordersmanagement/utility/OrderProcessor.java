@@ -4,7 +4,6 @@ import ordersmanagement.config.GlobalConfiguration;
 import ordersmanagement.dtos.OrderDto;
 import ordersmanagement.models.OrderModel;
 import ordersmanagement.repositories.OrderRepository;
-import ordersmanagement.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,19 +14,27 @@ public class OrderProcessor {
 
     private final OrderCreator orderCreator;
     private final OrderRepository orderRepository;
+    private final BillingService billingService;
 
     @Autowired
-    public OrderProcessor(OrderCreator orderCreator, OrderRepository orderRepository) {
+    public OrderProcessor(OrderCreator orderCreator, OrderRepository orderRepository, BillingService billingService) {
         this.orderCreator = orderCreator;
         this.orderRepository = orderRepository;
+        this.billingService = billingService;
     }
 
-    public OrderModel createOrderModel(OrderDto orderDto) {
+    public OrderModel createOrder(OrderDto orderDto) {
         OrderModel mainOrder = orderCreator.create(orderDto);
 
         orderRepository.save(mainOrder);
 
         return mainOrder;
+    }
+
+    // TODO - Implement this method ( confirmOrder )
+    public void confirmOrder(OrderModel order) {
+        // TODO - Notify the customer of order confirmation.
+        // TODO - Deduct orders' amounts from each customer's balance.
     }
 
     // OrderShippedNotification
