@@ -45,12 +45,12 @@ public class CustomerController {
     }
     @DeleteMapping("/api/customers/{id}")
     void deleteEmployee(@PathVariable Long id) {
+        Customer existingCustomer = repository.findById(id)
+                .orElseThrow(() -> new CustomerNotFoundException(id));
         repository.deleteById(id);
     }
     @DeleteMapping("/api/customers")
-    void deleteAllEmployee() {
-        repository.deleteAll();
-    }
+    void deleteAllEmployee() {repository.deleteAll();}
 
 
 }
