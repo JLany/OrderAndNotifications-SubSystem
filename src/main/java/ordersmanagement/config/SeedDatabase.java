@@ -4,6 +4,7 @@ import ordersmanagement.models.Address;
 import ordersmanagement.models.Category;
 import ordersmanagement.models.Customer;
 import ordersmanagement.models.Product;
+import ordersmanagement.notifications.NotificationChannel;
 import ordersmanagement.repositories.CategoryRepository;
 import ordersmanagement.repositories.CustomerRepository;
 import ordersmanagement.repositories.ProductRepository;
@@ -22,7 +23,7 @@ public class SeedDatabase {
     CommandLineRunner initDatabase(CustomerRepository customers, ProductRepository products, CategoryRepository categories) {
 
         return args -> {
-            customers.save(new Customer("Yousef", 1000.0, new Address()));
+            customers.save(new Customer("Yousef", 1000.0, new Address(), "samannoudy@egypt.com", "01013647953", NotificationChannel.EMAIL));
 
             //Toys Category
             Category tempCategory = new Category("Toys");

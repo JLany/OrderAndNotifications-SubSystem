@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api")
 public class OrderController {
 
     private final OrderRepository repository;
@@ -51,8 +52,7 @@ public class OrderController {
         OrderModel shippingCandidate = repository.findById(orderId)
                 .orElseThrow(() -> new OrderNotFoundException(String.format("Could not find order %d", orderId)));
 
-        // TODO - Notify customers of order shipment.
-        // TODO - Deduct shipping fees of each order from it's corresponding customer.
+        processor.shipOrder(shippingCandidate);
     }
 
     @GetMapping("/orders/cancel/{orderId}")
@@ -64,9 +64,6 @@ public class OrderController {
             throw new OrderCannotBeCancelledException(
                     String.format("Order %d cannot be cancelled. Cancellation duration limit exceeded.", orderId));
         }
-
-        // TODO - Notify each customer that his corresponding order has been cancelled.
-        // TODO - Credit customers' balances with each order's amount.
 
         processor.cancelOrder(cancellationCandidate);
     }

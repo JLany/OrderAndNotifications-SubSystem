@@ -1,4 +1,4 @@
-package ordersmanagement.models.notifications;
+package ordersmanagement.notifications;
 
 public class EmailNotification extends Notification {
     private String _email;

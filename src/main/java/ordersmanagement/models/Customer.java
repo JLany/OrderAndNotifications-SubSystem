@@ -4,6 +4,7 @@ import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import ordersmanagement.notifications.NotificationChannel;
 
 @Entity
 public class Customer {
@@ -22,12 +23,18 @@ public class Customer {
     private double balance;
     @Embedded
     private Address address;
+    private String email;
+    private String phone;
+    private NotificationChannel preferredChannel;
 
     public Customer() {}
-    public Customer(String name, double balance, Address address) {
+    public Customer(String name, double balance, Address address, String email, String phone, NotificationChannel preferredChannel) {
         this.name = name;
         this.balance = balance;
         this.address = address;
+        this.email = email;
+        this.phone = phone;
+        this.preferredChannel = preferredChannel;
     }
 
 
@@ -54,5 +61,29 @@ public class Customer {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public NotificationChannel getPreferredChannel() {
+        return preferredChannel;
+    }
+
+    public void setPreferredChannel(NotificationChannel preferredChannel) {
+        this.preferredChannel = preferredChannel;
     }
 }

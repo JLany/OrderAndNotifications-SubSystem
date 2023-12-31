@@ -1,7 +1,7 @@
 package ordersmanagement.controllers;
 
-import ordersmanagement.models.notifications.Notification;
-import ordersmanagement.utility.NotificationDispatcher;
+import ordersmanagement.notifications.Notification;
+import ordersmanagement.notifications.NotificationDispatcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

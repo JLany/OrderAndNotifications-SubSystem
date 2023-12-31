@@ -12,7 +12,7 @@ public class NotEnoughBalanceAdvice {
 
     @ResponseBody
     @ExceptionHandler(NotEnoughBalanceException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String notEnoughBalanceHandler(NotEnoughBalanceException ex) {
         return ex.getMessage();
     }

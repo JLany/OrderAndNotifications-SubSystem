@@ -1,4 +1,4 @@
-package ordersmanagement.models.notifications;
+package ordersmanagement.notifications;
 
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -20,4 +20,6 @@ public abstract class Notification {
     public String getNotificationBody(){
         return _message.formulateMessage();
     }
+
+    public String getTemplate() { return _message.getTemplate(); }
 }

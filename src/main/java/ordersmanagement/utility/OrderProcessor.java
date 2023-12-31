@@ -3,6 +3,7 @@ package ordersmanagement.utility;
 import ordersmanagement.config.GlobalConfiguration;
 import ordersmanagement.dtos.OrderDto;
 import ordersmanagement.models.OrderModel;
+import ordersmanagement.models.SimpleOrder;
 import ordersmanagement.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,38 +15,42 @@ public class OrderProcessor {
 
     private final OrderCreator orderCreator;
     private final OrderRepository orderRepository;
-    private final BillingService billingService;
+    private final OrderNotificationManager orderNotifications;
+    private final OrderPaymentManager orderPayments;
 
     @Autowired
-    public OrderProcessor(OrderCreator orderCreator, OrderRepository orderRepository, BillingService billingService) {
+    public OrderProcessor(OrderCreator orderCreator, OrderRepository orderRepository,
+                          OrderNotificationManager orderNotifications, OrderPaymentManager orderPayments) {
         this.orderCreator = orderCreator;
         this.orderRepository = orderRepository;
-        this.billingService = billingService;
+        this.orderPayments = orderPayments;
+        this.orderNotifications = orderNotifications;
     }
 
     public OrderModel createOrder(OrderDto orderDto) {
         OrderModel mainOrder = orderCreator.create(orderDto);
 
-        orderRepository.save(mainOrder);
-
         return mainOrder;
     }
 
-    // TODO - Implement this method ( confirmOrder )
     public void confirmOrder(OrderModel order) {
-        // TODO - Notify the customer of order confirmation.
-        // TODO - Deduct orders' amounts from each customer's balance.
+        orderNotifications.notifyOrderConfirmed(order);
+
+        orderPayments.payOrder(order);
+
+        orderRepository.save(order);
     }
 
-    // OrderShippedNotification
-    // OrderConfirmedNotification
-    // ...
+    public void shipOrder(OrderModel order) {
+        orderPayments.payOrderShippingFees(order);
 
-    // TODO - Think through this.
-//    public void notifyCustomer(NotificationStrategy notificationStrategy, OrderModel order) {
-//
-//    }
+        order.getOrder().setShipped(true);
+        for (SimpleOrder o : order.getSubOrders()) {
+            o.setShipped(true);
+        }
 
+        orderNotifications.notifyOrderShipped(order);
+    }
 
     public boolean canCancelOrder(OrderModel order) {
         if (order.getOrder().getCreatedDate()
@@ -56,12 +61,17 @@ public class OrderProcessor {
             return false;
         }
 
+        if (order.getOrder().isShipped()) {
+            return false;
+        }
+
         return true;
     }
 
     public void cancelOrder(OrderModel order) {
-        // TODO - Notify each customer that his corresponding order has been cancelled.
-        // TODO - Credit customers' balances with each order's amount.
+        orderNotifications.notifyOrderCancelled(order);
+
+        orderPayments.refundOrder(order);
 
         orderRepository.deleteById(order.getId());
     }

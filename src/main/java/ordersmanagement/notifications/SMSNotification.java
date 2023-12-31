@@ -1,4 +1,4 @@
-package ordersmanagement.models.notifications;
+package ordersmanagement.notifications;
 
 public class SMSNotification extends Notification {
     private String _phoneNumber;

@@ -1,9 +1,8 @@
-package ordersmanagement.utility;
-import ordersmanagement.models.notifications.EmailNotification;
-import ordersmanagement.models.notifications.Notification;
-import ordersmanagement.models.notifications.NotificationQueue;
-import ordersmanagement.models.notifications.SMSNotification;
-import ordersmanagement.repositories.NotificationRepository;
+package ordersmanagement.notifications;
+import ordersmanagement.notifications.EmailNotification;
+import ordersmanagement.notifications.Notification;
+import ordersmanagement.notifications.NotificationQueue;
+import ordersmanagement.notifications.SMSNotification;
 import ordersmanagement.repositories.NotificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 // responsible for all statistics whether in-queue or out of queue
 @Component
@@ -32,7 +32,6 @@ public class NotificationDispatcher {
 
     public ArrayList<Notification> getContentsOfQueue(){
         return notificationQueue.getQueueContents();
-
     }
 
     public NotificationQueue getNotificationQueue(){
@@ -91,7 +90,7 @@ public class NotificationDispatcher {
         Map<String, Integer> templateCount = new HashMap<>();
         int size = currentNotifications.size();
         for (int i = 0; i < size; i++){
-            String templateUsed = currentNotifications.get(i).getClass().getName();
+            String templateUsed = currentNotifications.get(i).getTemplate();
             templateCount.put(templateUsed, templateCount.getOrDefault(templateUsed, 0)+1);
         }
 
@@ -105,7 +104,6 @@ public class NotificationDispatcher {
         }
         return mostUsedTemplate;
     }
-
 
     public synchronized void sendNextNotification(){
         if(!notificationQueue.isEmpty()){

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/Product")
+@RequestMapping("/api/products")
 public class ProductController {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;

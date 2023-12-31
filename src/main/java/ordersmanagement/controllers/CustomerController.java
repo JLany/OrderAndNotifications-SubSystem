@@ -9,6 +9,7 @@ import java.util.List;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/api")
 public class CustomerController {
     private final CustomerRepository repository;
 
@@ -44,7 +45,10 @@ public class CustomerController {
     }
     @DeleteMapping("/customers/{id}")
     void deleteEmployee(@PathVariable Long id) {
-        repository.deleteById(id);
+        Customer existingCustomer = repository.findById(id)
+                .orElseThrow(() -> new CustomerNotFoundException(id));
+
+        repository.deleteById(existingCustomer.getId());
     }
     @DeleteMapping("/customers")
     void deleteAllEmployee() {
