@@ -20,16 +20,21 @@ public class Customer {
     }
 
     private String name;
+    private String email;
     private double balance;
+
     @Embedded
     private Address address;
-    private String email;
     private String phone;
     private NotificationChannel preferredChannel;
 
+
+
     public Customer() {}
+
     public Customer(String name, double balance, Address address, String email, String phone, NotificationChannel preferredChannel) {
         this.name = name;
+        this.email = email;
         this.balance = balance;
         this.address = address;
         this.email = email;

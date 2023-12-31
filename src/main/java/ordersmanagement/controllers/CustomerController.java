@@ -17,43 +17,42 @@ public class CustomerController {
         this.repository = repository;
     }
 
-    @PostMapping("/customers")
+    @PostMapping("/api/customers")
     Customer addCustomer(@RequestBody Customer newCustomer) {
         return repository.save(newCustomer);
     }
 
-    @GetMapping("/customers/{id}")
+    @GetMapping("/api/customers/{id}")
     Customer getCustomer(@PathVariable Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new CustomerNotFoundException(id));
     }
 
-    @GetMapping("/customers")
+    @GetMapping("/api/customers")
     List<Customer> getAllCustomers() {
         return repository.findAll();
     }
-    @PutMapping("/customers/{id}")
+    @PutMapping("/api/customers/{id}")
     Customer editCustomer(@RequestBody Customer customer,@PathVariable Long id)
     {
         Customer existingCustomer = repository.findById(id)
                 .orElseThrow(() -> new CustomerNotFoundException(id));
 
         existingCustomer.setName(customer.getName());
+        existingCustomer.setEmail(customer.getEmail());
         existingCustomer.setBalance(customer.getBalance());
         existingCustomer.setAddress(customer.getAddress());
         return repository.save(existingCustomer);
     }
-    @DeleteMapping("/customers/{id}")
+    @DeleteMapping("/api/customers/{id}")
     void deleteEmployee(@PathVariable Long id) {
         Customer existingCustomer = repository.findById(id)
                 .orElseThrow(() -> new CustomerNotFoundException(id));
 
         repository.deleteById(existingCustomer.getId());
     }
-    @DeleteMapping("/customers")
-    void deleteAllEmployee() {
-        repository.deleteAll();
-    }
+    @DeleteMapping("/api/customers")
+    void deleteAllEmployee() {repository.deleteAll();}
 
 
 }
