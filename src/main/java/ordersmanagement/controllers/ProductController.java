@@ -23,36 +23,6 @@ public class ProductController {
         this.categoryRepository = categoryRepository;
     }
 
-    //TODO: (After the submission (Not required in the submission))
-    //TODO:(Not required in the submission) add all CRUD operations
-    //TODO: this comment should be removed before the submission
-
-//    //adding new Category
-//    @PostMapping("/addCategory")
-//    public Category addCategory(@RequestBody Category category){
-//        return categoryRepository.save(category);
-//    }
-//
-//
-//    //adding new Product
-//    @PostMapping("/addProduct")
-//    public Product addProduct(@RequestBody Product product){
-//
-//        //if the product is being added to a predefined Category
-//        if(categoryRepository.existsById(product.getCategoryID())){
-//            Category existingCategory = categoryRepository.findById(product.getCategoryID())
-//                    .orElse(null);
-//
-//            //update the Remaining Quantity
-//            existingCategory.addQuantity(product.getQuantity());
-//            return productRepository.save(product);
-//        }
-//        else{
-//            //else we will throw an exception
-//            throw new CategoryNotFoundExeption();
-//        }
-//    }
-
     //get all Categories
     @GetMapping("/allCategories")
     public List<Category> getAllCategories(){
