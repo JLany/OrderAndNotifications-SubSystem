@@ -1,6 +1,7 @@
 package ordersmanagement.controllers;
 
 import ordersmanagement.dtos.OrderDto;
+import ordersmanagement.exceptions.OrderCannotBeCancelledException;
 import ordersmanagement.exceptions.OrderNotFoundException;
 import ordersmanagement.models.OrderModel;
 import ordersmanagement.repositories.OrderRepository;
@@ -28,49 +29,46 @@ public class OrderController {
         return repository.findAll();
     }
 
-    @GetMapping("/orders/{id}")
-    public OrderModel get(@PathVariable Long id) {
-        OrderModel order = repository.findById(id)
-                .orElseThrow(() -> new OrderNotFoundException(String.format("Could not find order %d", id)));
+    @GetMapping("/orders/{orderId}")
+    public OrderModel get(@PathVariable Long orderId) {
+        OrderModel order = repository.findById(orderId)
+                .orElseThrow(() -> new OrderNotFoundException(String.format("Could not find order %d", orderId)));
 
         return order;
     }
 
-    // TODO - Test add method (controller action).
     @PostMapping("/orders")
     public OrderModel add(@RequestBody OrderDto order) {
-        // We need to find the order that has the customerId as it's customerId.
-        // Then we add the rest of the orders to it as a list.
         OrderModel model = processor.createOrderModel(order);
 
-        return repository.save(model);
+        // TODO - Notify the customer of order confirmation.
+        // TODO - Deduct orders' amounts from each customer's balance.
 
-        // The reason for receiving a list of orders instead of a compound order is
-        // to facilitate the operation of payload construction on the other end
-        // of the network. And here we handle it and make sure it's processed and
-        // stored as a compound order.
-
-        // A class for order persistence might help encapsulate the above logic.
-
-
+        return model;
     }
 
-    // TODO - Implement method.
-    @GetMapping("/orders/cancel/{id}")
-    public boolean cancelOrder(@PathVariable Long orderId) {
-        var cancellationCandidate = repository.findById(orderId);
-        if (cancellationCandidate.isEmpty()) {
+    @GetMapping("/orders/ship/{orderId}")
+    public void shipOrder(@PathVariable Long orderId) {
+        OrderModel shippingCandidate = repository.findById(orderId)
+                .orElseThrow(() -> new OrderNotFoundException(String.format("Could not find order %d", orderId)));
 
-            // Do bad stuff.
+        // TODO - Notify customers of order shipment.
+        // TODO - Deduct shipping fees of each order from it's corresponding customer.
+    }
+
+    @GetMapping("/orders/cancel/{orderId}")
+    public void cancelOrder(@PathVariable Long orderId) {
+        OrderModel cancellationCandidate = repository.findById(orderId)
+                .orElseThrow(() -> new OrderNotFoundException(String.format("Could not find order %d", orderId)));
+
+        if (!processor.canCancelOrder(cancellationCandidate)) {
+            throw new OrderCannotBeCancelledException(
+                    String.format("Order %d cannot be cancelled. Cancellation duration limit exceeded.", orderId));
         }
 
-        boolean cancelSuccess = processor.cancelOrder(cancellationCandidate.get());
+        // TODO - Notify each customer that his corresponding order has been cancelled.
+        // TODO - Credit customers' balances with each order's amount.
 
-        if (cancelSuccess) {
-//            processor.notifyCustomer();
-        }
-
-        // TODO - Try to make this action return something useful using HTTP. (400, 200, ..etc)
-        return false;
+        processor.cancelOrder(cancellationCandidate);
     }
 }
